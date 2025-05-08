@@ -280,8 +280,15 @@ public class ToTheMoon_Manager : MonoBehaviour
             Debug.Log("[7] 텍스트 설정 완료");
 
             topBar.SetActive(true);
+
             returnBtn.SetActive(!isOver);
             reStartBtn.SetActive(isOver);
+            overCoinTxt.text = "+ " + coin;
+            overScoreTxt.text = "점수 : " + (int)score;
+            if (score > game.high_score)
+                game.high_score = (int)score;
+
+            overHighScoreTxt.text = "최고 : " + game.high_score;
             Debug.Log("[8] UI 활성화 완료");
 
             gameOverPanel.SetActive(true);
