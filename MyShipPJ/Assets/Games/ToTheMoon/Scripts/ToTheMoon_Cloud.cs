@@ -7,26 +7,24 @@ public class ToTheMoon_Cloud : MonoBehaviour
 
     void Update()
     {
-        Move();
-        FlipX();
+        if (ToTheMoon_Manager.instance != null)
+        {
+            // Manager에서 배경 이동 속도 가져오기
+            float moveAmount = ToTheMoon_Manager.instance.BackgroundMoveSpeed * Time.deltaTime;
+            transform.position += Vector3.down * moveAmount;
+        }
+
+        CheckFallOffScreen();
     }
 
-    void Move() //운석,코인 낙하
+    void CheckFallOffScreen()
     {
-        Vector3 movement = Vector3.down * Time.deltaTime * Meteor_Manager.instance.speed;
-        transform.position += movement;
-
-        if (transform.position.y < -8)
+        // 화면 아래로 떨어졌는지 확인
+        float screenBottom = Camera.main.transform.position.y - Camera.main.orthographicSize;
+        if (transform.position.y < screenBottom - 1f) // 1f 여유 공간
         {
             Destroy(gameObject);
         }
     }
 
-    void FlipX()
-    {
-        // 현재 localScale의 x 값을 반전시킴
-        Vector3 currentScale = transform.localScale;
-        currentScale.x *= -1;
-        transform.localScale = currentScale;
-    }
 }
